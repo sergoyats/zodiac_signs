@@ -1,10 +1,10 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 
-register = template.Library()  # экземпляр класса Library, регистрирует новые фильтры
+register = template.Library()  # the instance of the Library class (registers new filters)
 
 
 @register.filter(name='split')
-@stringfilter  # гарантирует, что value будет принимать значением только строку!
-def split(value, key=' '):  # key ─ разделитель строки value
+@stringfilter
+def split(value, key=' '):  # key is the string separator value
     return value.split(key)

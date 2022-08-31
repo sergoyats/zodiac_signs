@@ -18,6 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # кастомный URLconfig, срабатывает когда URL начинается на horoscope/
-    path('horoscope/', include('horoscope.urls')),  # связь с horoscope\urls.py
+    path('horoscope/', include('horoscope.urls')),  # connexion with  horoscope\urls.py
 ]
