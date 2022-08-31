@@ -22,7 +22,7 @@ class MyFloatConverter:
 
 
 class MyDateConverter:  # 05-09-2020
-    regex = '^(0[1-9]|[12][0-9]|3[01])[-]([1-9]|1[012])[-](19|20)\d\d$'
+    regex = '^(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\d\d$'
 
     def to_python(self, value):
         return datetime.strptime(value, '%d-%m-%Y')

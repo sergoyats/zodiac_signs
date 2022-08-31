@@ -5,30 +5,28 @@
     <link rel="stylesheet" href="{% static 'horoscope/css/index.css' %}">
 {% endblock %}
 
-{% block title %}
-    Меню
-{% endblock %}
+{% block title %} Меню {% endblock %}
 
 {% block content %}
-    <h1>Гороскоп</h1>
+    <h1> Гороскоп </h1>
     <!-- путь от папки templates в приложении horoscope -->
     {% include 'includes/navbar.html' only %}
     <!--only не даст отобразить значение переменных из navbar.html -->
     <ol>
     {% for zodiac in zodiacs %}
-        <li><a href="{% url 'horoscope-name' sign_zodiac=zodiac %}">{{ zodiac|title }}</a></li>
+        <li><a href="{% url 'horoscope-name' sign_zodiac=zodiac %}"> {{ zodiac|title }} </a></li>
     {% endfor %}
     </ol>
 
     <ul>
     {% for kind in kinds %}
-        <li><a href="{% url 'horoscope-type' %}">{{ kind|title }}</a></li>
+        <li><a href="{% url 'type-name' sign_type=kind %}"> {{ kind|title }} </a></li>
     {% endfor %}
     </ul>
 
     <ul>
     {% for rost in roster %}
-        <li><a href="{% url 'type-name' sign_zodiac=rost %}">{{ rost|title }}</a></li>
+        <li><a href="{% url 'horoscope-name' sign_zodiac=rost %}"> {{ rost|title }} </a></li>
     {% endfor %}
     </ul>
 

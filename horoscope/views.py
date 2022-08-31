@@ -27,7 +27,7 @@ sign_types = {
 }
 
 
-def index(request):  # главное меню (все знаки зодиака в виде ссылок)
+def index(request):  # главное меню (все знаки зодиака)
     context = {
         'zodiacs': zodiacs,
         'zodiac_dict': zodiac_dict
@@ -47,7 +47,7 @@ def index(request):
 '''
 
 
-def index_type_list(request):  # меню стихий знаков зодиака в виде ссылок
+def index_type_list(request):  # меню стихий знаков зодиака
     kinds = list(sign_types)
     context = {
         'kinds': kinds,
@@ -68,8 +68,8 @@ def index_type_list(request):
 '''
 
 
-def index_type(request, sign_zodiac: str):  # меню знаков зодиака определённой стихии
-    roster = sign_types.get(sign_zodiac)
+def index_type(request, sign_type: str):  # меню знаков зодиака определённой стихии
+    roster = sign_types.get(sign_type)
     context = {
         'roster': roster,
     }
@@ -77,8 +77,8 @@ def index_type(request, sign_zodiac: str):  # меню знаков зодиак
 
 
 '''
-def index_type(request, sign_zodiac):
-    roster = sign_types.get(sign_zodiac)
+def index_type(request, sign_type):
+    roster = sign_types.get(sign_type)
     if roster:  # если у малого словаря есть такой ключ ─ тригон знаков зодиака, то вернуть его значение
         li_components = ''
         for kind in roster:
@@ -112,36 +112,36 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
 '''
 
 
-def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
-    if sign_zodiac > len(zodiacs):
-        return HttpResponseNotFound(f'{sign_zodiac} ─ номер несуществующего знака зодиака!')
-    name_zodiac = zodiacs[sign_zodiac - 1]
+def get_info_about_sign_zodiac_by_number(request, number: int):
+    if number not in range(1, 13):
+        return HttpResponseNotFound(f'{number} ─ номер несуществующего знака зодиака!')
+    name_zodiac = zodiacs[number - 1]
     redirect_url = reverse('horoscope-name', args=(name_zodiac,))
     return HttpResponseRedirect(redirect_url)
 
 
-def get_yyyy_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали число из четырёх цифр {sign_zodiac}')
+def get_yyyy_converters(request, four_digits):
+    return HttpResponse(f'Вы передали число из четырёх цифр {four_digits}')
 
 
-def get_my_float_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали вещественное число {sign_zodiac}')
+def get_my_float_converters(request, real_number):
+    return HttpResponse(f'Вы передали вещественное число {real_number}')
 
 
-def get_my_date_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали дату {sign_zodiac}')
+def get_my_date_converters(request, date):
+    return HttpResponse(f'Вы передали дату {date}')
 
 
 def get_info_by_date(request, day, month):
     sign_from = {(21, 1): 'aquarius', (20, 2): 'pisces', (21, 3): 'aries',
-                (21, 4): 'taurus', (22, 5): 'gemini', (22, 6): 'cancer',
-                (23, 7): 'leo', (21, 8): 'virgo', (24, 9): 'libra',
-                (24, 10): 'scorpio', (23, 11): 'sagittarius', (23, 12): 'capricorn'}
+                 (21, 4): 'taurus', (22, 5): 'gemini', (22, 6): 'cancer',
+                 (23, 7): 'leo', (21, 8): 'virgo', (24, 9): 'libra',
+                 (24, 10): 'scorpio', (23, 11): 'sagittarius', (23, 12): 'capricorn'}
     sign_list = list(sign_from)
     if month not in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12):
         return HttpResponse('Неверно указан МЕСЯЦ !!!')
     if (month in (1, 3, 5, 7, 8, 10, 12) and day > 31) or \
-    (month in (4, 6, 9, 11) and day > 30) or (month == 2 and day > 29):
+            (month in (4, 6, 9, 11) and day > 30) or (month == 2 and day > 29):
         return HttpResponse('Неверно указан ДЕНЬ месяца !!!')
 
     for i, elem in enumerate(sign_list):
@@ -149,5 +149,5 @@ def get_info_by_date(request, day, month):
             if day >= elem[0]:
                 sign = sign_from.get(elem)
             elif day < elem[0]:
-                sign = sign_from.get(sign_list[i-1])
+                sign = sign_from.get(sign_list[i - 1])
     return HttpResponse(f'<h3>{day}-й день {month}-го месяца приходится на</h3>\n<h2>{zodiac_dict.get(sign)}</h2>')
