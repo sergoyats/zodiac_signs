@@ -30,7 +30,6 @@ sign_types = {
 def index(request):  # the main menu (all zodiac signs)
     context = {
         'zodiacs': zodiacs,
-        'zodiac_dict': zodiac_dict
     }
     return render(request, 'horoscope/index.html', context=context)
 
@@ -48,9 +47,9 @@ def index(request):
 
 
 def index_type_list(request):  # the elements menu
-    kinds = list(sign_types)
+    elements = list(sign_types)
     context = {
-        'kinds': kinds,
+        'elements': elements,
     }
     return render(request, 'horoscope/index.html', context=context)
 
@@ -94,7 +93,6 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
     data = {
         'description': description,
         'sign': sign_zodiac,
-        'zodiacs': zodiacs,
     }
     return render(request, 'horoscope/info_zodiac.html', context=data)
 
