@@ -17,8 +17,8 @@
     </ol>
 
     <ul>
-    {% for kind in kinds %}
-        <li><a href="{% url 'type-name' sign_type=kind %}"> {{ kind|title }} </a></li>
+    {% for element in elements %}
+        <li><a href="{% url 'type-name' sign_type=element %}"> {{ element|title }} </a></li>
     {% endfor %}
     </ul>
 
@@ -27,5 +27,4 @@
         <li><a href="{% url 'horoscope-name' sign_zodiac=rost %}"> {{ rost|title }} </a></li>
     {% endfor %}
     </ul>
-
 {% endblock %}
