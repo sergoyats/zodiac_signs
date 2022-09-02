@@ -13,7 +13,7 @@
 {% block content %}
     {% include 'includes/navbar.html' %}
     {% if description is None %}
-        <h2> {{ sign|upper }} ─ неправильный знак зодиака </h2>
+        <h2> {{ sign|upper }} ─ несуществующий знак зодиака! </h2>
     {% else %}
         <h1> {{ sign|title }} </h1>
         <h2> {{ description }} </h2>

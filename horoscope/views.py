@@ -17,8 +17,6 @@ zodiac_dict = {
     'pisces': 'Рыбы - двенадцатый знак зодиака, Юпитер (с 20 февраля по 20 марта).'
 }
 
-zodiacs = list(zodiac_dict)
-
 sign_types = {
     'fire': ['aries', 'leo', 'sagittarius'],
     'earth': ['taurus', 'virgo', 'capricorn'],
@@ -29,7 +27,6 @@ sign_types = {
 
 def index(request):  # главное меню (все знаки зодиака)
     context = {
-        'zodiacs': zodiacs,
         'zodiac_dict': zodiac_dict
     }
     return render(request, 'horoscope/index.html', context=context)
@@ -38,7 +35,7 @@ def index(request):  # главное меню (все знаки зодиака
 '''
 def index(request):
     li_elements = ''
-    for sign in zodiacs:
+    for sign in list(zodiac_dict):
         redirect_path = reverse('horoscope-name', args=[sign])
         li_elements += f'<li> <a href="{redirect_path}"> {sign.title()} </a> </li>'
     response = f'<ol>{li_elements}</ol>'
@@ -48,9 +45,9 @@ def index(request):
 
 
 def index_type_list(request):  # меню стихий знаков зодиака
-    kinds = list(sign_types)
+    elements = {'fire': 'Огонь', 'earth': 'Земля', 'air': 'Воздух', 'water': 'Вода'}
     context = {
-        'kinds': kinds,
+        'elements': elements,
     }
     return render(request, 'horoscope/index.html', context=context)
 
@@ -69,9 +66,10 @@ def index_type_list(request):
 
 
 def index_type(request, sign_type: str):  # меню знаков зодиака определённой стихии
-    roster = sign_types.get(sign_type)
+    signs_eng = sign_types.get(sign_type)
+    accordance = {sign_eng: zodiac_dict[sign_eng].split()[0] for sign_eng in signs_eng}
     context = {
-        'roster': roster,
+        'accordance': accordance,
     }
     return render(request, 'horoscope/index.html', context=context)
 
@@ -115,7 +113,7 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
 def get_info_about_sign_zodiac_by_number(request, number: int):
     if number not in range(1, 13):
         return HttpResponseNotFound(f'{number} ─ номер несуществующего знака зодиака!')
-    name_zodiac = zodiacs[number - 1]
+    name_zodiac = list(zodiac_dict)[number - 1]
     redirect_url = reverse('horoscope-name', args=(name_zodiac,))
     return HttpResponseRedirect(redirect_url)
 

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load custom_filter %}
 {% load static %}
 {% block css_additional %}
     <link rel="stylesheet" href="{% static 'horoscope/css/index.css' %}">
@@ -13,22 +14,20 @@
     {% include 'includes/navbar.html' only %}
     <!--only не даст отобразить значение переменных из navbar.html -->
     <ol>
-    {% for zodiac in zodiacs %}
-        <li><a href="{% url 'horoscope-name' sign_zodiac=zodiac %}"> {{ zodiac|title }} </a></li>
+    {% for zodiac, description_zodiac in zodiac_dict.items %}
+        <li><a href="{% url 'horoscope-name' sign_zodiac=zodiac %}"> {{ description_zodiac|split|first }} </a></li>
     {% endfor %}
     </ol>
 
     <ul>
-    {% for kind in kinds %}
-        <li><a href="{% url 'type-name' sign_type=kind %}"> {{ kind|title }} </a></li>
+    {% for element_eng, element_ru in elements.items %}
+        <li><a href="{% url 'type-name' sign_type=element_eng %}"> {{ element_ru }} </a></li>
     {% endfor %}
     </ul>
 
     <ul>
-    {% for rost in roster %}
-        <li><a href="{% url 'horoscope-name' sign_zodiac=rost %}"> {{ rost|title }} </a></li>
+    {% for sign_eng, sign_ru in accordance.items %}
+        <li><a href="{% url 'horoscope-name' sign_zodiac=sign_eng %}"> {{ sign_ru }} </a></li>
     {% endfor %}
     </ul>
-
-<!--    {% include 'includes/navbar.html' %}  &lt;!&ndash; повторение навигационной панели &ndash;&gt;-->
 {% endblock %}
