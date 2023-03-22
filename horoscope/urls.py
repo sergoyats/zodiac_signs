@@ -6,7 +6,8 @@ register_converter(converters.MyFloatConverter, 'my_float')
 register_converter(converters.MyDateConverter, 'my_date')
 
 urlpatterns = [
-    # функция главного меню index сработает, если в роуте после /horoscope  ничего не будет:
+    # функция главного меню index сработает, если в роуте после указанного в zodiac_signs\urls.py
+    # префикса /horoscope ничего не будет:
     path('', views.index, name='horoscope-index'),
     # функция меню групп знаков зодиака index_type_list  сработает при роуте /horoscope/type:
     path('type', views.index_type_list, name='horoscope-type'),
